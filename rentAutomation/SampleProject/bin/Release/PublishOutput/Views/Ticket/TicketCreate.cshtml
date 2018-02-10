@@ -1,0 +1,75 @@
+﻿@model SampleProject.Models.TicketModel
+@{
+    ViewBag.Title = "TicketCreate";
+    Layout = "~/Views/Shared/MasterMenu.cshtml";
+}
+
+@using (Html.BeginForm())
+
+
+{
+
+    <section class="content-header">
+        <h1>
+            Raise New Query
+
+        </h1>
+
+    </section>
+
+
+    <br />
+
+    <section class="box">
+        <section class="box-body">
+            @*<div class="controls" style="display:none">
+            @Html.TextBoxFor(m => m.Raised_By_Login_Id, new { id = "TxtRaisedLoginID", @class = "form-control", placeholder = "Description", @required = "required" })
+
+        </div>*@
+            <div class="row">
+                <dv class="form-group col-md-6">
+                    <p style="color:red;font-size:15px">Please enter the details of your request and we will respond as soon as possible.</p>
+                </div>
+                
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Service Type<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.DropDownListFor(m => m.Type,
+         new SelectList(new List<SelectListItem> {
+            new SelectListItem { Text = "All Services ", Value = "0" },
+            new SelectListItem { Text = "Plumbing Service ", Value = "1"},
+            new SelectListItem { Text = "Electric Service", Value = "2"},
+            new SelectListItem { Text = "Others", Value = "3"}}, "Value", "Text"), new { @class = "form-control", id = "TxtTicketType" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Description<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Description, new { id = "TxtTicketDesc", @class = "form-control", placeholder = "Description", @required = "required", onkeypress = "return ValidateAlpha(event);", @style = "height:100px;" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="button" value="Raise" name="Add" id="btnTicketNew" class="btn btn-block btn-success">
+                </div>
+                <div class="col-md-2">
+                    <input type="button" value="Back" name="back" id="btnback" class="btn btn-block btn-danger" onclick="window.location.href='/Ticket/TicketView'">
+                </div>
+            </div>
+        </section>
+    </section>
+}
+

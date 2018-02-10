@@ -1,0 +1,64 @@
+﻿@model SampleProject.Models.LoginModel
+@{
+    Layout = null;
+    var status = ViewBag.Message;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Smart Login Form Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
+    <script type="application/x-javascript">
+         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+        function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+    <link href="/smart_login/web/css/style.css" rel="stylesheet" type="text/css" media="all">
+    <!-- online-fonts -->
+    <link href="//fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900iSlabo+27px&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
+    <!--//online-fonts -->
+    @*@Scripts.Render("~/bundles/Login")
+    @Scripts.Render("~/bundles/jquery")*@
+
+
+
+
+    <title>Login</title>
+</head>
+@using (Html.BeginForm())
+{
+<body>
+    <div class="main-w3l">
+        <div class="w3layouts-main">
+            <h2>Login Now</h2>
+
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.userName, new { id = "User", @class = "form-control", @placeholder = "UserName", autocomplete = "off", @Type = "userName", required = "required" })
+                @Html.ValidationMessageFor(model => model.userName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.password, new { id = "password", @class = "form-control", @placeholder = "password", autocomplete = "off", @Type = "password", required = "required" })
+                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+            </div>
+
+
+            <h6>@Html.ActionLink("Forgot Passsword?", "ViewCustomer", "Customer")</h6>
+            <div class="clear"></div>
+            <input type="submit" value="login" name="login" id="log" onclick="CheckExistence();">
+
+
+            <p class="txtReg">Don't Have an Account ?@Html.ActionLink("Register Now", "RegisterUser", "Login")</p>
+            @*<p>Don't Have an Account ?<a href="#">Register Now</a></p>*@
+        </div>
+
+    </div>
+
+
+
+
+
+</body>
+}
+</html>

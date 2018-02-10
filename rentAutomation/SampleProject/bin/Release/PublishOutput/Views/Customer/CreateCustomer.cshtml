@@ -1,0 +1,162 @@
+﻿@model SampleProject.Models.CustomerModel
+@{
+    var taskStatus = ViewData["taskStatusList"];
+    ViewBag.Title = "CreateCustomer";
+    //Layout = null;
+}
+
+@using (Html.BeginForm())
+
+
+{
+
+    <section class="content-header">
+        <h1>
+            @ViewBag.Title
+
+        </h1>
+
+    </section>
+
+
+    <br />
+
+    <section class="box">
+        <section class="box-body">
+            <div class="controls" style="display:none">
+                @Html.TextBoxFor(m => m.id, new { id = "id", @class = "form-control", placeholder = "id" })
+            </div>
+            <div class="row">
+
+                <div class="form-group col-md-6">
+                    <label>First Name<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.firstName, new { id = "TxtFirstName", @class = "form-control", placeholder = "First Name", @required = "required", onkeypress = "return ValidateAlpha(event);" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Middle Name<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.middleName, new { id = "TxtMiddleName", @class = "form-control", placeholder = "Middle Name", @required = "required", onkeypress = "return ValidateAlpha(event);" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="form-group col-md-6">
+                    <label>Last Name<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.lastName, new { id = "Txtlastname", @class = "form-control", placeholder = "Last Name", @required = "required", onkeypress = "return ValidateAlpha(event);" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group col-md-6">
+                    <label>Phone No<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.phoneNO, new { id = "Txtcontact", @maxlength = "10", @class = "form-control", placeholder = "Phone No", @required = "required", onkeypress = "return isNumber(event);" })                    <div class="help-block"></div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row">
+
+                <div class="form-group col-md-6">
+                    <label>Mobile No<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.mobileNo, new { id = "TxtMobileNo", @class = "form-control", placeholder = "Mobile No", @required = "required", onkeypress = "return isNumber(event);" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+
+
+                <div class="form-group col-md-6">
+                    <label>Address<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.address, new { id = "TxtAddress", @class = "form-control", placeholder = "Address", @required = "required" })
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Country<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.DropDownListFor(m => m.country, new SelectList(ViewBag.listCO, "Value", "Text"), "select", new { id = "TxtCountry", @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>State<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.DropDownListFor(m => m.state, new SelectList(ViewBag.listST, "Value", "Text"), "select", new { id = "TxtState", @class = "form-control" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>City<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.DropDownListFor(m => m.city, new SelectList(ViewBag.listCi, "Value", "Text"), "select", new { id = "TxtCity", @class = "form-control" })
+                        <div class="help-block"></div>
+                    </div>
+
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Type Of Proof<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.DropDownListFor(m => m.proofType, new SelectList(ViewBag.listCi, "Value", "Text"), "select", new { id = "TxtProofType", @class = "form-control" })
+                        <div class="help-block"></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label>Proof 1<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.Files, new { id = "TxtProof1", type = "file", name = "Files", @class = "form-control" })<br /><br />
+                        <div class="help-block"></div>
+                    </div>
+
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Proof 2 <span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.Files, new { id = "TxtProof2", type = "file", name = "Files", @class = "form-control" })<br /><br />
+                        <div class="help-block"></div>
+                    </div>
+
+                </div>
+                <div class="form-group col-md-4">
+                    <label><span class="text-danger"></span></label>
+                    <div class="controls">
+                        <input type="button" id="submitbtn" value="Upload" /><br /><br />
+                        <div class="help-block"></div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="button" value="@Model.btnValue" name="Add" id="btnAdd" class="btn btn-block btn-success">
+                </div>
+                <div class="col-md-2">
+                    <input type="button" value="Back" name="back" id="btnback" class="btn btn-block btn-danger" onclick="window.location.href='/Customer/ViewCustomer'">
+                </div>
+            </div>
+        </section>
+    </section>
+}

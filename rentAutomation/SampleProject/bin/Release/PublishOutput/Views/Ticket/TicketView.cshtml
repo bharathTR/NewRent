@@ -1,0 +1,42 @@
+﻿@model SampleProject.Models.TicketModel
+@{
+    ViewBag.Title = "TicketView";
+    Layout = "~/Views/Shared/MasterMenu.cshtml";
+}
+
+
+
+@using (Html.BeginForm())
+{
+    <section class="content-header">
+        <h1>
+            @ViewBag.Title
+
+        </h1>
+
+    </section>
+
+
+    <br />
+
+    <section class="box">
+        <section class="box-body">
+           
+            <table id="TicketViewTable" class="table table-striped table-bordered" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>TicketNo</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Raised Date</th>
+                        <th>Status</th>
+                       
+                    </tr>
+                </thead>
+
+            </table>
+        </section>
+    </section>
+}
+
+
