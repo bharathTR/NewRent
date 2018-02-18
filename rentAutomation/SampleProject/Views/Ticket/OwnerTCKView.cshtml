@@ -1,0 +1,87 @@
+﻿@model SampleProject.Models.TicketModel
+@{
+    ViewBag.Title = "OwnerTCKView";
+    Layout = "~/Views/Shared/MasterMenu.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    <section class="content-header">
+        <h1>
+            @*@ViewBag.Title*@
+            Raised Tickets
+        </h1>
+
+    </section>
+
+
+    <br />
+   
+    <section class="box">
+        <section class="box-body">
+
+            <div class="row mb-30">
+                <!-- Column -->
+                <div class="col-md-6 col-lg-3 col-xlg-3">
+                    <div class="box box-inverse box-info">
+                        <div class="box-body text-center">
+                            <h1 class="font-light text-white">2,064</h1>
+                            <h6 class="text-white mb-10">Total Tickets</h6>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+                <div class="col-md-6 col-lg-3 col-xlg-3">
+                    <div class="box box-success box-inverse">
+                        <div class="box-body text-center">
+                            <h1 class="font-light text-white">1,738</h1>
+                            <h6 class="text-white mb-10">Responded</h6>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+                <div class="col-md-6 col-lg-3 col-xlg-3">
+                    <div class="box box-inverse box-danger">
+                        <div class="box-body text-center">
+                            <h1 class="font-light text-white">1100</h1>
+                            <h6 class="text-white mb-10">Resolve</h6>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+                <div class="col-md-6 col-lg-3 col-xlg-3">
+                    <div class="box box-inverse box-dark">
+                        <div class="box-body text-center">
+                            <h1 class="font-light text-white">964</h1>
+                            <h6 class="text-white mb-10">Pending</h6>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+            </div>
+
+            @*table table-striped table-bordered now*@
+            <table id="TicketViewTableOwner" class="display nowrap" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Ticket Number</th>
+                        <th>FIRSTNAME</th>
+                        <th>LASTNAME</th>
+                        <th>MOBILENO</th>
+                        <th>H_Number</th>
+                        <th>H_BLOCK</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Raised Date</th>
+                        <th>Status</th>
+
+                    </tr>
+                </thead>
+
+            </table>
+        </section>
+    </section>
+}
+

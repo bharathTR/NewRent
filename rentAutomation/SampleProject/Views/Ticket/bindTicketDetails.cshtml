@@ -1,0 +1,154 @@
+﻿@model SampleProject.Models.TicketModel
+@{
+    ViewBag.Title = "bindTicketDetails";
+    Layout = "~/Views/Shared/MasterMenu.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+@using (Html.BeginForm())
+
+
+{
+
+    <section class="content-header">
+        <h1>
+            @ViewBag.Title
+
+        </h1>
+
+    </section>
+
+
+    <br />
+
+    <section class="box">
+        <section class="box-body">
+            <div class="controls" style="display:none">
+                @Html.TextBoxFor(m => m.TicketID, new { id = "TxtTicketid", @class = "form-control", @disabled = "disabled" })
+            </div>
+            <div class="row">
+
+                <div class="form-group col-md-6">
+                    <label>First Name<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.FIRSTNAME, new { id = "TxtTCKFirstName", @class = "form-control", @disabled = "disabled" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Last Name<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.LASTNAME, new { id = "TxtTCKLastName", @class = "form-control", @disabled = "disabled" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="form-group col-md-6">
+                    <label>Mobile NO<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.MOBILENO, new { id = "TxtTCKMobile", @class = "form-control", @disabled = "disabled" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Block<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.H_BLOCK, new { id = "TxtTCKBlock", @class = "form-control", @disabled = "disabled" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="form-group col-md-6">
+                    <label>House Number<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.H_Number, new { id = "TxtTCKHouseNo", @class = "form-control", @disabled = "disabled" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Issue Type<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.Type, new { id = "TxtTCKType", @class = "form-control", @disabled = "disabled" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="form-group col-md-6">
+                    <label>Description<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Description, new { id = "TxtTCKDescription", @class = "form-control", @disabled = "disabled" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Raised Date<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.Raised_Date, new { id = "TxtTCKRaised_Date", @class = "form-control", @disabled = "disabled" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="form-group col-md-6">
+                    <label>Progress<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.DropDownListFor(m => m.TimeSlot,
+new SelectList(new List<SelectListItem> {
+new SelectListItem { Text = "Processing", Value = "0"},
+ new SelectListItem { Text = "Completed", Value = "1"}
+}, "Value", "Text"),
+"Select",
+new { @class = "form-control", id = "TxtProgress" })
+                        @*@Html.DropDownListFor(m => m.TimeSlot, new SelectList(ViewBag.TimeSlots, "Value", "Text"), "select", new { id = "TxtProgress", @class = "form-control" })*@
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Expected Resolution Date<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.ExpCloseDate, new { id = "TxtTCKrosolve_Date", @class = "form-control" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="form-group col-md-6">
+                    <label>Time Slot<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.DropDownListFor(m => m.TimeSlot, new SelectList(ViewBag.TimeSlots, "Value", "Text"), "select", new { id = "TxtSlot", @class = "form-control" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Response<span class="text-danger">*</span></label>
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Response, new { id = "TxtTCKResponse", @class = "form-control", @style = "height:150px;" })
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="button" value="Status Update" name="Add" id="btnTCKStatus" class="btn btn-block btn-success">
+                </div>
+                <div class="col-md-2">
+                    <input type="button" value="Back" name="back" id="btnback" class="btn btn-block btn-danger" onclick="window.location.href='/Ticket/OwnerTCKView'">
+                </div>
+            </div>
+           
+
+        </section>
+    </section>
+
+            }
