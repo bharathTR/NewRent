@@ -16,8 +16,8 @@ namespace SampleProject.SessionFilter
 
             if (context.Session != null)
             {
-                if(context.Session.IsNewSession)
-                {
+                //if(context.Session.IsNewSession)
+                //{
                     string sessionCookie = context.Request.Headers["Cookie"];
                     if((sessionCookie!=null)&&(sessionCookie.IndexOf("ASP.NET_SessionId")>=0))
                     {
@@ -36,7 +36,7 @@ namespace SampleProject.SessionFilter
 
                         }
 
-                    }
+                    //}
                 }
             }
 

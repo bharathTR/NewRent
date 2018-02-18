@@ -14,6 +14,7 @@ namespace SampleProject.Controllers
         
         DashboardModel dash = new DashboardModel();
         [SessionFilter.SessionExpireFilter]
+        [Authorize]
         public ActionResult Index()
         {
             return View();

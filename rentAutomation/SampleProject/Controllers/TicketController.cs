@@ -130,7 +130,12 @@ namespace SampleProject.Controllers
         public ActionResult OwnerTCKView()
         {
             int a_id = Convert.ToInt32(Session["ApartmentID"]);
-            return View();
+            TicketModel lstTcount;
+
+            lstTcount= objgetTicket.getTicketCout(a_id);
+
+           
+            return View(lstTcount);
         }
         [SessionFilter.SessionExpireFilter]
         public ActionResult TicketViewGridOwner(jQueryDataTableParamModel param)

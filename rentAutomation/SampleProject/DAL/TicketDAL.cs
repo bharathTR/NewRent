@@ -116,6 +116,39 @@ namespace SampleProject.DAL
             return res;
         }
 
+        internal TicketModel getTicketCout( int id)
+        {
+
+            SqlCommand cmd;
+            SqlConnection con = GlobalConnection.getConnection();
+            DataTable Dt = new DataTable();
+            TicketModel lstTicketCount = new TicketModel();
+            cmd = new SqlCommand("[sp_TicketCount]", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Apartment_ID", id);
+            cmd.Parameters.Add("@Processing", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.Parameters.Add("@Pending", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.Parameters.Add("@Completed", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.Parameters.Add("@Total", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.ExecuteNonQuery();
+
+            int p_processing = (int)cmd.Parameters["@Processing"].Value;
+            int p_completed = (int)cmd.Parameters["@Completed"].Value;
+            int p_pending = (int)cmd.Parameters["@Pending"].Value;
+            int p_total = (int)cmd.Parameters["@Total"].Value;
+
+
+            lstTicketCount.completed = p_completed;
+            lstTicketCount.pending = p_pending;
+            lstTicketCount.processing = p_processing;
+            lstTicketCount.total = p_total;
+
+             
+        
+            
+            return lstTicketCount;
+        }
+
         internal int TicketStatusUpdate(int Ticketid, int a_id, string time, string response, string ExpectedClosedate, string progress)
         {
            
