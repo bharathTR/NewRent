@@ -14,7 +14,7 @@ namespace SampleProject.DAL
     public class CustomerDAL
     {
         LoginModel Loginobj = new LoginModel();
-        public List<CustomerModel> getAllTableDetails()
+        public List<CustomerModel> getAllTableDetails(int a_id,int permission_id)
         {
             List<CustomerModel> regdetails = new List<CustomerModel>();
             SqlCommand cmd;
@@ -37,21 +37,10 @@ namespace SampleProject.DAL
             cmd.Parameters.AddWithValue("@lastlogindate", "");
             cmd.Parameters.AddWithValue("@state", "");
             cmd.Parameters.AddWithValue("@action", "");
+            cmd.Parameters.AddWithValue("@a_id",a_id);
+            cmd.Parameters.AddWithValue("@Permission_id", permission_id);
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
             sd.Fill(Dt);
-
-            //GlobalConnection conn = new GlobalConnection();
-            //OracleCommand cmd = new OracleCommand();
-            //cmd.Connection = conn.getConnection();
-            //cmd.CommandText = "FetchCustomerRecords";
-            //cmd.CommandType = CommandType.StoredProcedure;
-            //cmd.Transaction = null;
-            //cmd.Parameters.Add("p_id", OracleDbType.Int64).Value = 0;
-            //cmd.Parameters.Add("p_resultset", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
-            //DataTable Dt = new DataTable();
-            //OracleDataAdapter da = new OracleDataAdapter(cmd);
-            //da.Fill(Dt);
-
             foreach (DataRow dR in Dt.Rows)
             {
                 regdetails.Add(new CustomerModel
@@ -146,7 +135,8 @@ namespace SampleProject.DAL
             return res;
         }
 
-        internal string[] SaveRecord(int id, string FirstName, string LastName, string Contact, string City, string Country)
+        internal string[] SaveRecord(int id, string FirstName, string LastName, string Contact, string City, string Country, 
+            string proof1, string proof2, string blockNo, string floorNo, string flatNo, string loginName, string pwd)
         {
 
             string[] res = new string[3];

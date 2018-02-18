@@ -34,7 +34,8 @@ namespace SampleProject.Models
 
         public List<HttpPostedFileBase> Files { get; set; }
 
-        public string proofType { get; set; }
+        public string Aadhar { get; set; }
+        public string VoterID { get; set; }
 
         public string btnValue { get; set; }
 

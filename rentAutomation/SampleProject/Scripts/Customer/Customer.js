@@ -11,6 +11,10 @@ var url = null;
             "sAjaxSource": "/Customer/getCustomerList",
             "bProcessing": true,
             "deferRender": true,
+            "rowReorder": {
+                "selector": 'td:nth-child(2)'
+            },
+            "responsive": true,
             "aoColumns": [
                 {"sName": "id" },
                 {"sName": "firstname" },

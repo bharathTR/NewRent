@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    debugger;
+   
     $("#btnAdd").click(function () {
         var id = $('#id').val();
         var FirstName = $('#TxtFirstName').val();
@@ -10,43 +10,54 @@
         var Address = $('#TxtAddress').val();
         var City = $('#Txtcity').val();
         var Country = $('#Txtcountry').val();
-        var fileUpload1 = $("#TxtProof1").get(0);
-        var fileUpload2 = $("#TxtProof2").get(1);
+        var proof1 = $("#TxtProof1").val();
+        var proof2 = $("#TxtProof2").val();
+
+        var blockNo = $('#TxtBlockNo').val();
+        var floorNo = $('#TxtFloorNo').val();
+        var flatNo = $('#TxtFlatNo').val();
+        var loginName = $("#TxtUN").val();
+        var pwd = $("#TxtPW").val();
         
 
-        if (FirstName == "") {
-            alert("Enter First Name");
-            $('#TxtFirstName').focus();
-            return false;
-        }
-        if (LastName == "") {
-            alert("Enter Last Name");
-            $('#Txtlastname').focus();
-            return false;
-        }
+        //if (FirstName == "") {
+        //    alert("Enter First Name");
+        //    $('#TxtFirstName').focus();
+        //    return false;
+        //}
+        //if (LastName == "") {
+        //    alert("Enter Last Name");
+        //    $('#Txtlastname').focus();
+        //    return false;
+        //}
 
-        if (Contact == "") {
+        //if (Contact == "") {
             
-           alert("Enter Contact No");
-            $('#Txtcontact').focus();
-            return false;
-        }
+        //   alert("Enter Contact No");
+        //    $('#Txtcontact').focus();
+        //    return false;
+        //}
 
-        if (City == "") {
-            alert("Select City");
-            $('#Txtcity').focus();
-            return false;
-        }
-        if (Country == "") {
-            alert("Select Country");
-            $('#Txtcountry').focus();
-            return false;
-        }
-
+        //if (City == "") {
+        //    alert("Select City");
+        //    $('#Txtcity').focus();
+        //    return false;
+        //}
+        //if (Country == "") {
+        //    alert("Select Country");
+        //    $('#Txtcountry').focus();
+        //    return false;
+        //}
+        
         $.ajax({
             url: "/Customer/NewCustomer",
             type: "Post",
-            data: { 'id': id, 'FirstName': FirstName, 'LastName': LastName, 'Contact': Contact, 'City': City, 'Country': Country},
+            data: {
+                'id': id, 'FirstName': FirstName, 'LastName': LastName, 'Contact': Contact, 'City': City, 'Country': Country,
+                'proof1': proof1, 'proof2': proof2, 'blockNo': blockNo, 'floorNo': floorNo, 'flatNo': flatNo,
+                'loginName': loginName, 'pwd': pwd
+
+            },
             success: function (response) {
                 alert(response[0]);
 

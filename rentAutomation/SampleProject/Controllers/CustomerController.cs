@@ -6,7 +6,6 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.SessionState;
 
 namespace SampleProject.Controllers
 {
@@ -100,9 +99,7 @@ namespace SampleProject.Controllers
             return View(objCust);
         }
 
-
-
-
+    
         [SessionFilter.SessionExpireFilter]
         public JsonResult EditCustomerDetails(string id)
         {
@@ -119,10 +116,11 @@ namespace SampleProject.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
         [SessionFilter.SessionExpireFilter]
-        public ActionResult NewCustomer(int id,string FirstName, string LastName,string Contact, string City, string Country, HttpPostedFileBase file1, HttpPostedFileBase file2)
+        public ActionResult NewCustomer(int id,string FirstName, string LastName,string Contact, string City, string Country,
+            string proof1, string proof2, string blockNo, string floorNo, string flatNo, string loginName, string pwd)
         {
             
-            string[] Result = objCustDAL.SaveRecord(id,FirstName, LastName, Contact, City, Country);
+            string[] Result = objCustDAL.SaveRecord(id,FirstName, LastName, Contact, City, Country, proof1, proof2, blockNo, floorNo, flatNo, loginName, pwd);
             if(Result[0]=="Saved")
             {
                 return Json(Result);
@@ -140,9 +138,10 @@ namespace SampleProject.Controllers
         public ActionResult getCustomerList(jQueryDataTableParamModel param )
         {
             List<CustomerModel> listdetails = new List<CustomerModel>();
-           
 
-            var StudentList = objCustDAL.getAllTableDetails();
+            int a_id = Convert.ToInt32(Session["ApartmentID"]);
+            int p_id = Convert.ToInt32(Session["userType"]);
+            var StudentList = objCustDAL.getAllTableDetails(a_id, p_id);
             TempData["Data"] = StudentList;
 
             
@@ -198,6 +197,10 @@ namespace SampleProject.Controllers
                         JsonRequestBehavior.AllowGet);
             
         }
+
         
+
+
+
     }
 }

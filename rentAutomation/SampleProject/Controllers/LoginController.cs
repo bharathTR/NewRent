@@ -1,10 +1,7 @@
 ﻿using SampleProject.DAL;
 using SampleProject.Models;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SampleProject.Controllers
@@ -33,6 +30,7 @@ namespace SampleProject.Controllers
             string pass = string.Empty;
             string LoginID = null;
             string permission = null;
+            string ApartmentID = null;
             foreach (DataRow dR in res.Rows)
             {
 
@@ -40,6 +38,7 @@ namespace SampleProject.Controllers
                 pass = Convert.ToString(dR["password"]);
                 LoginID = Convert.ToString(dR["LOGINID"]);
                 permission = Convert.ToString(dR["Permissionid"]);
+                ApartmentID = Convert.ToString(dR["H_Apartment_ID"]);
 
             }
             if (userName == user && pass == password)
@@ -47,6 +46,7 @@ namespace SampleProject.Controllers
                 Session["userName"] = user;
                 Session["LOGINID"] = LoginID;
                 Session["userType"] = permission;
+                Session["ApartmentID"] = ApartmentID;
                 return RedirectToAction("Index", "Dashboard");
             }
             else {
