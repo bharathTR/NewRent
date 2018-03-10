@@ -71,8 +71,58 @@ namespace SampleProject.DAL
                 return Dt;
             }
         }
+        internal DataTable GetPhoneNumber(int loginID)
+        {
 
-            public List<TicketModel> getAllTableDetailsOwner(int id)
+            SqlCommand cmd;
+            string MobileNumber = string.Empty;
+            SqlConnection con = GlobalConnection.getConnection();
+            DataTable Dt = new DataTable();
+            DataSet dset = new DataSet();
+            cmd = new SqlCommand("[GetPhoneNumber]", con);
+            cmd.Parameters.AddWithValue("@loginId", loginID);
+            cmd.Parameters.Add("@Phone", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.Parameters.Add("@FIRSTNAME", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.Parameters.Add("@LASTNAME", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            sd.Fill(dset);
+            if (dset != null)
+            {
+
+
+                Dt = dset.Tables[0];
+
+            }
+            return Dt;
+        }
+        internal DataTable GetTicketNumber(int loginID)
+        {
+
+            SqlCommand cmd;
+            string MobileNumber = string.Empty;
+            SqlConnection con = GlobalConnection.getConnection();
+            DataTable Dt = new DataTable();
+            DataSet dset = new DataSet();
+            cmd = new SqlCommand("[GetTicketNumber]", con);
+            cmd.Parameters.AddWithValue("@loginId", loginID);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            sd.Fill(dset);
+            if (dset != null)
+            {
+
+
+                Dt = dset.Tables[0];
+
+            }
+            return Dt;
+        }
+
+
+
+        public List<TicketModel> getAllTableDetailsOwner(int id)
 
         {
             List<TicketModel> objTicketModel = new List<TicketModel>();

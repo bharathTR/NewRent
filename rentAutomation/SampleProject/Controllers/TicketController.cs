@@ -2,8 +2,10 @@
 using SampleProject.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -123,10 +125,46 @@ namespace SampleProject.Controllers
         public JsonResult TicketCreateNew(string Type, string Desc)
         {
             int id = Convert.ToInt32(Session["LoginID"]);
-            int result=objgetTicket.SaveNewTicket(Type,Desc,id);
+            DataTable dt = new DataTable();
+            DataTable dtCustomerData = new DataTable();
+            int result = objgetTicket.SaveNewTicket(Type, Desc, id);
+            string res = string.Empty;
+            if (result == 1)
+            {
 
-            return Json(result,JsonRequestBehavior.AllowGet);
-        }
+
+
+
+                dtCustomerData = objgetTicket.GetPhoneNumber(id);
+                DataRow row = dtCustomerData.Rows[0];
+                string phoneNumber = row["Phone"].ToString();
+                string Fname = row["FIRSTNAME"].ToString();
+                string Lname = row["LASTNAME"].ToString();
+
+                dt = objgetTicket.GetTicketNumber(id);
+                DataRow dr = dt.Rows[0];
+                if (phoneNumber != "")
+                {
+
+                    string sms = "Hello" + " " + Fname + " " + Lname + " " + "This is a notification that Ticket No:" + dr["TICKET_NUMBER"].ToString() + " was created.";
+                    String message = HttpUtility.UrlEncode(sms);
+                    using (var wb = new WebClient())
+                    {
+                        byte[] response = wb.UploadValues("https://api.textlocal.in/send/", new NameValueCollection()
+                {
+                {"apikey" , "h9iDVofhwqM-SxRs1zOpbwMXjhCaIdf0bWYHmsGZld"},
+                {"numbers" , phoneNumber},
+                {"message" , message},
+                {"sender" , "TXTLCL"}
+                });
+                        res = System.Text.Encoding.UTF8.GetString(response);
+
+                    }
+                }
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+
 
         [SessionFilter.SessionExpireFilter]
         public ActionResult OwnerTCKView()
