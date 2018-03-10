@@ -1,4 +1,5 @@
-﻿using SampleProject.Models;
+﻿using log4net;
+using SampleProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,9 +10,12 @@ using System.Web.Mvc;
 
 namespace SampleProject.DAL
 {
+   
     public class TicketDAL
     {
-
+         public static readonly log4net.ILog log =
+        log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        //ILog log=log4net.LogManager.GetLogger("MyAppender");
         public List<TicketModel> getAllTableDetails(int id)
 
         {
@@ -43,7 +47,7 @@ namespace SampleProject.DAL
 
             return objTicketModel;
         }
-
+        
         public DataTable FetchTicketDetail(int id,int a_id)
 
         {
@@ -51,13 +55,21 @@ namespace SampleProject.DAL
             SqlCommand cmd;
             SqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
-            cmd = new SqlCommand("[FetchTicketDetail]", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Ticket_id", id);
-            cmd.Parameters.AddWithValue("@Apart_id", a_id);
-            SqlDataAdapter sd = new SqlDataAdapter(cmd);
-            sd.Fill(Dt);
-            return Dt;
+            try
+            {
+                cmd = new SqlCommand("[FetchTicketDetail]", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Ticket_id", id);
+                cmd.Parameters.AddWithValue("@Apart_id", a_id);
+                SqlDataAdapter sd = new SqlDataAdapter(cmd);
+                sd.Fill(Dt);
+                return Dt;
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+                return Dt;
+            }
         }
 
             public List<TicketModel> getAllTableDetailsOwner(int id)

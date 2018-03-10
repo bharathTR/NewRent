@@ -14,6 +14,8 @@ namespace SampleProject.Controllers
     public class TicketController : Controller
     {
         // GET: Ticket
+        public static readonly log4net.ILog log =
+       log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         TicketDAL objgetTicket = new TicketDAL();
         [SessionFilter.SessionExpireFilter]
         public ActionResult TicketView()
@@ -211,26 +213,38 @@ namespace SampleProject.Controllers
             TempData["tickID"] = id;
             return Json(JsonRequestBehavior.AllowGet);
         }
+       
+
         [SessionFilter.SessionExpireFilter]
         public ActionResult bindTicketDetails()
         {
-            int data = Convert.ToInt32(TempData["tickID"]);
-            int a_id = Convert.ToInt32(Session["ApartmentID"]);
+
             TicketModel t = new TicketModel();
-            DataTable dt = objgetTicket.FetchTicketDetail(Convert.ToInt32(data), a_id);
-            t.TicketID= Convert.ToString(dt.Rows[0]["TICKET_ID"]);
-            t.FIRSTNAME = Convert.ToString(dt.Rows[0]["FIRSTNAME"]);
-            t.LASTNAME = Convert.ToString(dt.Rows[0]["LASTNAME"]);
-            t.MOBILENO = Convert.ToString(dt.Rows[0]["MOBILENO"]);
-            t.H_BLOCK = Convert.ToString(dt.Rows[0]["H_BLOCK"]);
-            t.H_Number = Convert.ToString(dt.Rows[0]["H_Number"]);
-            t.Type = Convert.ToString(dt.Rows[0]["TICKET_TYPE"]);
-            t.Description = Convert.ToString(dt.Rows[0]["TICKET_DESC"]);
-            t.Raised_Date = Convert.ToString(dt.Rows[0]["TICKET_RAISED_DATE"]);
-            List<SelectListItem> lstTimeSlots = new List<SelectListItem>();
-            lstTimeSlots=objgetTicket.getSlots();
-            ViewBag.TimeSlots = lstTimeSlots;
-            return View(t);
+            try
+            {
+                int data = Convert.ToInt32(TempData["tickID"]);
+                int a_id = Convert.ToInt32(Session["ApartmentID"]);
+                
+                DataTable dt = objgetTicket.FetchTicketDetail(Convert.ToInt32(data), a_id);
+                t.TicketID = Convert.ToString(dt.Rows[0]["TICKET_ID"]);
+                t.FIRSTNAME = Convert.ToString(dt.Rows[0]["FIRSTNAME"]);
+                t.LASTNAME = Convert.ToString(dt.Rows[0]["LASTNAME"]);
+                t.MOBILENO = Convert.ToString(dt.Rows[0]["MOBILENO"]);
+                t.H_BLOCK = Convert.ToString(dt.Rows[0]["H_BLOCK"]);
+                t.H_Number = Convert.ToString(dt.Rows[0]["H_Number"]);
+                t.Type = Convert.ToString(dt.Rows[0]["TICKET_TYPE"]);
+                t.Description = Convert.ToString(dt.Rows[0]["TICKET_DESC"]);
+                t.Raised_Date = Convert.ToString(dt.Rows[0]["TICKET_RAISED_DATE"]);
+                List<SelectListItem> lstTimeSlots = new List<SelectListItem>();
+                lstTimeSlots = objgetTicket.getSlots();
+                ViewBag.TimeSlots = lstTimeSlots;
+                return View(t);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                return Json("Something went wrong..Try after some Time",JsonRequestBehavior.AllowGet);
+            }
         }
         [SessionFilter.SessionExpireFilter]
         public JsonResult TicketStatusUpdate(string Ticketid,string time,string  response, string Expectedrosolvedate, string progress)

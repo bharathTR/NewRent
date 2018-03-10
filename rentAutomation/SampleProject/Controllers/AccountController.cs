@@ -114,7 +114,7 @@ namespace SampleProject.Controllers
         public ActionResult LogOut()
         {
             Session.Abandon();
-            return RedirectToAction("Account", "Login");
+            return RedirectToAction("Login", "Account");
         }
 
         public ActionResult RegisterUser()

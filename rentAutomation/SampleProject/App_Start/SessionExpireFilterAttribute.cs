@@ -28,7 +28,7 @@ namespace SampleProject.SessionFilter
                             //if Session == null => Login page
                             if (ctx.Session["Username"] == null)
                             {
-                                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { action = "Login", controller = "Login" }));
+                                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { action = "Login", controller = "Account" }));
 
                             }
 

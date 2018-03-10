@@ -12,6 +12,7 @@ namespace SampleProject
     {
         protected void Application_Start()
         {
+            log4net.Config.XmlConfigurator.Configure(); // error log line  by monish
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
