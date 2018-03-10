@@ -1,0 +1,30 @@
+2018-03-10 19:12:52,379 ERROR SampleProject.DAL.TicketDAL - Procedure or function 'FetchTicketDetail' expects parameter '@Ticket_id', which was not supplied.
+2018-03-10 19:12:52,562 ERROR SampleProject.Controllers.TicketController - System.IndexOutOfRangeException: There is no row at position 0.
+   at System.Data.RBTree`1.GetNodeByIndex(Int32 userIndex)
+   at System.Data.DataRowCollection.get_Item(Int32 index)
+   at SampleProject.Controllers.TicketController.bindTicketDetails() in C:\Users\Monish\Desktop\NewRent\rentAutomation\SampleProject\Controllers\TicketController.cs:line 227
+2018-03-10 19:21:45,065 ERROR SampleProject.DAL.TicketDAL - Procedure or function 'FetchTicketDetail' expects parameter '@Ticket_id', which was not supplied.
+2018-03-10 19:21:45,115 ERROR SampleProject.Controllers.TicketController - System.IndexOutOfRangeException: There is no row at position 0.
+   at System.Data.RBTree`1.GetNodeByIndex(Int32 userIndex)
+   at System.Data.DataRowCollection.get_Item(Int32 index)
+   at SampleProject.Controllers.TicketController.bindTicketDetails()
+2018-03-10 19:50:29,687 ERROR SampleProject.DAL.TicketDAL - Procedure or function 'FetchTicketDetail' expects parameter '@Ticket_id', which was not supplied.
+2018-03-10 19:50:30,469 ERROR SampleProject.Controllers.TicketController - System.IndexOutOfRangeException: There is no row at position 0.
+   at System.Data.RBTree`1.GetNodeByIndex(Int32 userIndex)
+   at System.Data.DataRowCollection.get_Item(Int32 index)
+   at SampleProject.Controllers.TicketController.bindTicketDetails() in C:\Users\Monish\Desktop\NewRent\rentAutomation\SampleProject\Controllers\TicketController.cs:line 229
+2018-03-10 19:57:48,357 ERROR SampleProject.DAL.TicketDAL - Procedure or function 'FetchTicketDetail' expects parameter '@Ticket_id', which was not supplied.
+2018-03-10 19:57:48,763 ERROR SampleProject.Controllers.TicketController - System.IndexOutOfRangeException: There is no row at position 0.
+   at System.Data.RBTree`1.GetNodeByIndex(Int32 userIndex)
+   at System.Data.DataRowCollection.get_Item(Int32 index)
+   at SampleProject.Controllers.TicketController.bindTicketDetails() in C:\Users\Monish\Desktop\NewRent\rentAutomation\SampleProject\Controllers\TicketController.cs:line 229
+2018-03-10 19:57:55,701 ERROR SampleProject.DAL.TicketDAL - Procedure or function 'FetchTicketDetail' expects parameter '@Ticket_id', which was not supplied.
+2018-03-10 19:57:55,732 ERROR SampleProject.Controllers.TicketController - System.IndexOutOfRangeException: There is no row at position 0.
+   at System.Data.RBTree`1.GetNodeByIndex(Int32 userIndex)
+   at System.Data.DataRowCollection.get_Item(Int32 index)
+   at SampleProject.Controllers.TicketController.bindTicketDetails() in C:\Users\Monish\Desktop\NewRent\rentAutomation\SampleProject\Controllers\TicketController.cs:line 229
+2018-03-10 19:58:41,075 ERROR SampleProject.DAL.TicketDAL - Procedure or function 'FetchTicketDetail' expects parameter '@Ticket_id', which was not supplied.
+2018-03-10 19:58:41,122 ERROR SampleProject.Controllers.TicketController - System.IndexOutOfRangeException: There is no row at position 0.
+   at System.Data.RBTree`1.GetNodeByIndex(Int32 userIndex)
+   at System.Data.DataRowCollection.get_Item(Int32 index)
+   at SampleProject.Controllers.TicketController.bindTicketDetails() in C:\Users\Monish\Desktop\NewRent\rentAutomation\SampleProject\Controllers\TicketController.cs:line 229
