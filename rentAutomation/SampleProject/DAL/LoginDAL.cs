@@ -10,6 +10,7 @@ using System.Web;
 //using Oracle.DataAccess;
 using Oracle.ManagedDataAccess;
 using Oracle.ManagedDataAccess.Client;
+using MySql.Data.MySqlClient;
 
 namespace SampleProject.DAL
 {
@@ -23,16 +24,16 @@ namespace SampleProject.DAL
             //SqlConnection objcon = new SqlConnection();
             //objcon.ConnectionString = ConfigurationManager.ConnectionStrings["ConnString"].ToString();
             //objcon.Open();
-            SqlCommand cmd;
+            MySqlCommand cmd;
             
             
-            SqlConnection con = GlobalConnection.getConnection();
-            cmd = new SqlCommand("CheckUSerExistence", con);
+            MySqlConnection con = GlobalConnection.getConnection();
+            cmd = new MySqlCommand("CheckUSerExistence", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@User", user);
-            cmd.Parameters.Add("@pass", pass);
+            cmd.Parameters.AddWithValue("?p_User", user);
+            cmd.Parameters.AddWithValue("?p_pass", pass);
 
-            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
             DataTable DS = new DataTable();
             sd.Fill(DS);
             //foreach (DataRow dR in DS.Rows)

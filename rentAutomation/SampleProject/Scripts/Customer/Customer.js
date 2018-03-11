@@ -22,7 +22,7 @@ var url = null;
                 { "sName": "mobileNo" },
                 { "sName": "houseNo" },
                 { "sName": "blockNo" },
-                { "sName": "lastLoginDate" },
+                //{ "sName": "lastLoginDate" },
                 {
                     "sName": "Action",
                     "mRender": function (oObj) {

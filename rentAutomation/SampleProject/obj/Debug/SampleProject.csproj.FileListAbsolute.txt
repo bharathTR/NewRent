@@ -181,3 +181,5 @@ C:\Users\Monish\Desktop\NewRent\rentAutomation\SampleProject\obj\Debug\SamplePro
 C:\Users\Monish\Desktop\NewRent\rentAutomation\SampleProject\obj\Debug\SampleProject.pdb
 C:\Users\Monish\Desktop\NewRent\rentAutomation\SampleProject\bin\log4net.dll
 C:\Users\Monish\Desktop\NewRent\rentAutomation\SampleProject\bin\log4net.xml
+C:\Users\Monish\Desktop\NewRent\rentAutomation\SampleProject\bin\MySql.Data.dll
+C:\Users\Monish\Desktop\NewRent\rentAutomation\SampleProject\bin\MySql.Data.xml

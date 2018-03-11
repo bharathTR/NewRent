@@ -1,4 +1,5 @@
 ﻿using log4net;
+using MySql.Data.MySqlClient;
 using SampleProject.Models;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,13 @@ namespace SampleProject.DAL
 
         {
             List<TicketModel> objTicketModel = new List<TicketModel>();
-            SqlCommand cmd;
-            SqlConnection con = GlobalConnection.getConnection();
+            MySqlCommand cmd;
+            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
-            cmd = new SqlCommand("[getTicketList]", con);
+            cmd = new MySqlCommand("getTicketList", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@p_LoginId", id);
-            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            cmd.Parameters.AddWithValue("?p_p_LoginId", id);
+            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
             sd.Fill(Dt);
 
             
@@ -52,16 +53,16 @@ namespace SampleProject.DAL
 
         {
             List<TicketModel> objTicketModel = new List<TicketModel>();
-            SqlCommand cmd;
-            SqlConnection con = GlobalConnection.getConnection();
+            MySqlCommand cmd;
+            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
             try
             {
-                cmd = new SqlCommand("[FetchTicketDetail]", con);
+                cmd = new MySqlCommand("FetchTicketDetail", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Ticket_id", id);
-                cmd.Parameters.AddWithValue("@Apart_id", a_id);
-                SqlDataAdapter sd = new SqlDataAdapter(cmd);
+                cmd.Parameters.AddWithValue("?p_Ticket_id", id);
+                cmd.Parameters.AddWithValue("?p_Apart_id", a_id);
+                MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
                 sd.Fill(Dt);
                 return Dt;
             }
@@ -74,18 +75,18 @@ namespace SampleProject.DAL
         internal DataTable GetPhoneNumber(int loginID)
         {
 
-            SqlCommand cmd;
+            MySqlCommand cmd;
             string MobileNumber = string.Empty;
-            SqlConnection con = GlobalConnection.getConnection();
+            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
             DataSet dset = new DataSet();
-            cmd = new SqlCommand("[GetPhoneNumber]", con);
-            cmd.Parameters.AddWithValue("@loginId", loginID);
-            cmd.Parameters.Add("@Phone", SqlDbType.Int).Direction = ParameterDirection.Output;
-            cmd.Parameters.Add("@FIRSTNAME", SqlDbType.Int).Direction = ParameterDirection.Output;
-            cmd.Parameters.Add("@LASTNAME", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd = new MySqlCommand("GetPhoneNumber", con);
+            cmd.Parameters.AddWithValue("?p_loginId", loginID);
+            cmd.Parameters.AddWithValue("?p_Phone", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.Parameters.AddWithValue("?p_FIRSTNAME", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.Parameters.AddWithValue("?p_LASTNAME", SqlDbType.Int).Direction = ParameterDirection.Output;
             cmd.CommandType = CommandType.StoredProcedure;
-            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
             sd.Fill(dset);
             if (dset != null)
             {
@@ -99,16 +100,16 @@ namespace SampleProject.DAL
         internal DataTable GetTicketNumber(int loginID)
         {
 
-            SqlCommand cmd;
+            MySqlCommand cmd;
             string MobileNumber = string.Empty;
-            SqlConnection con = GlobalConnection.getConnection();
+            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
             DataSet dset = new DataSet();
-            cmd = new SqlCommand("[GetTicketNumber]", con);
-            cmd.Parameters.AddWithValue("@loginId", loginID);
+            cmd = new MySqlCommand("GetTicketNumber", con);
+            cmd.Parameters.AddWithValue("?p_loginId", loginID);
 
             cmd.CommandType = CommandType.StoredProcedure;
-            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
             sd.Fill(dset);
             if (dset != null)
             {
@@ -126,13 +127,13 @@ namespace SampleProject.DAL
 
         {
             List<TicketModel> objTicketModel = new List<TicketModel>();
-            SqlCommand cmd;
-            SqlConnection con = GlobalConnection.getConnection();
+            MySqlCommand cmd;
+            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
-            cmd = new SqlCommand("[getTicketListOwner]", con);
+            cmd = new MySqlCommand("getTicketListOwner", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@p_ApartmentID", id);
-            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            cmd.Parameters.AddWithValue("?p_p_ApartmentID", id);
+            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
             sd.Fill(Dt);
 
 
@@ -164,16 +165,17 @@ namespace SampleProject.DAL
         internal int SaveNewTicket(string Type,string Desc,int id)
         {
             
-            SqlCommand cmd;
-            SqlConnection con = GlobalConnection.getConnection();
+            MySqlCommand cmd;
+            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
-            cmd = new SqlCommand("[createNewTicket]", con);
+            cmd = new MySqlCommand("createNewTicket", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@p_TICKET_TYPE", Type);
-            cmd.Parameters.AddWithValue("@p_TICKET_DESC", Desc);
-            cmd.Parameters.AddWithValue("@p_TICKET_STATUS","Pending");
-            cmd.Parameters.AddWithValue("@p_RAISED_BY_LOGIN_ID", id);
-            cmd.Parameters.AddWithValue("@p_TICKET_FLAG", "0");
+            cmd.Parameters.AddWithValue("?p_p_TICKET_TYPE", Type);
+            cmd.Parameters.AddWithValue("?p_p_TICKET_DESC", Desc);
+            cmd.Parameters.AddWithValue("?p_p_TICKET_STATUS", "Pending");
+            cmd.Parameters.AddWithValue("?p_p_RAISED_BY_LOGIN_ID", id);
+            cmd.Parameters.AddWithValue("?p_p_TICKET_FLAG", "0");
+
             int res=cmd.ExecuteNonQuery();
             return res;
         }
@@ -181,23 +183,23 @@ namespace SampleProject.DAL
         internal TicketModel getTicketCout( int id)
         {
 
-            SqlCommand cmd;
-            SqlConnection con = GlobalConnection.getConnection();
+            MySqlCommand cmd;
+            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
             TicketModel lstTicketCount = new TicketModel();
-            cmd = new SqlCommand("[sp_TicketCount]", con);
+            cmd = new MySqlCommand("sp_TicketCount", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Apartment_ID", id);
-            cmd.Parameters.Add("@Processing", SqlDbType.Int).Direction = ParameterDirection.Output;
-            cmd.Parameters.Add("@Pending", SqlDbType.Int).Direction = ParameterDirection.Output;
-            cmd.Parameters.Add("@Completed", SqlDbType.Int).Direction = ParameterDirection.Output;
-            cmd.Parameters.Add("@Total", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.Parameters.AddWithValue("?p_Apartment_ID", id);
+            cmd.Parameters.AddWithValue("?p_Processing", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.Parameters.AddWithValue("?p_Pending", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.Parameters.AddWithValue("?p_Completed", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.Parameters.AddWithValue("?p_Total", SqlDbType.Int).Direction = ParameterDirection.Output;
             cmd.ExecuteNonQuery();
 
-            int p_processing = (int)cmd.Parameters["@Processing"].Value;
-            int p_completed = (int)cmd.Parameters["@Completed"].Value;
-            int p_pending = (int)cmd.Parameters["@Pending"].Value;
-            int p_total = (int)cmd.Parameters["@Total"].Value;
+            int p_processing = (int)cmd.Parameters["?p_Processing"].Value;
+            int p_completed = (int)cmd.Parameters["?p_Completed"].Value;
+            int p_pending = (int)cmd.Parameters["?p_Pending"].Value;
+            int p_total = (int)cmd.Parameters["?p_Total"].Value;
 
 
             lstTicketCount.completed = p_completed;
@@ -214,18 +216,18 @@ namespace SampleProject.DAL
         internal int TicketStatusUpdate(int Ticketid, int a_id, string time, string response, string ExpectedClosedate, string progress)
         {
            
-            SqlCommand cmd;
-            SqlConnection con = GlobalConnection.getConnection();
+            MySqlCommand cmd;
+            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
-            cmd = new SqlCommand("[sp_TicketStatusupdate]", con);
+            cmd = new MySqlCommand("sp_TicketStatusupdate", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@p_Ticketid", Ticketid);
-            cmd.Parameters.AddWithValue("@p_ApartmentID", a_id);
-            cmd.Parameters.AddWithValue("@p_TICKET_FLAG", 1);
-            cmd.Parameters.AddWithValue("@p_TICKET_SLOT", time);
-            cmd.Parameters.AddWithValue("@p_TICKET_EXP_CLOSURE_DATE", ExpectedClosedate);
-            cmd.Parameters.AddWithValue("@p_TICKET_RESPONSE", response);
-            cmd.Parameters.AddWithValue("@p_TICKET_STATUS", progress);
+            cmd.Parameters.AddWithValue("?p_p_Ticketid", Ticketid);
+            cmd.Parameters.AddWithValue("?p_p_ApartmentID", a_id);
+            cmd.Parameters.AddWithValue("?p_p_TICKET_FLAG", 1);
+            cmd.Parameters.AddWithValue("?p_p_TICKET_SLOT", time);
+            cmd.Parameters.AddWithValue("?p_p_TICKET_EXP_CLOSURE_DATE", ExpectedClosedate);
+            cmd.Parameters.AddWithValue("?p_p_TICKET_RESPONSE", response);
+            cmd.Parameters.AddWithValue("?p_p_TICKET_STATUS", progress);
             int res = cmd.ExecuteNonQuery();
             return res;
         }
@@ -233,13 +235,13 @@ namespace SampleProject.DAL
         internal DataSet getServiceTypes()
         {
             List<SelectListItem> listLocations = new List<SelectListItem>();
-            SqlCommand cmd;
-            SqlConnection con = GlobalConnection.getConnection();
+            MySqlCommand cmd;
+            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
             DataSet dset = new DataSet();
-            cmd = new SqlCommand("[sp_getServiceTypes]", con);
+            cmd = new MySqlCommand("sp_getServiceTypes", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
             sd.Fill(dset);
             return dset;
         }
@@ -247,13 +249,13 @@ namespace SampleProject.DAL
         internal List<SelectListItem> getSlots()
         {
             List<SelectListItem> listTimeSlots = new List<SelectListItem>();
-            SqlCommand cmd;
-            SqlConnection con = GlobalConnection.getConnection();
+            MySqlCommand cmd;
+            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
             DataSet dset = new DataSet();
-            cmd = new SqlCommand("[sp_Timeslots]", con);
+            cmd = new MySqlCommand("sp_Timeslots", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
             sd.Fill(Dt);
             foreach (DataRow dR in Dt.Rows)
             {

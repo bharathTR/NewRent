@@ -1,4 +1,5 @@
-﻿using Oracle.ManagedDataAccess.Client;
+﻿using MySql.Data.MySqlClient;
+using Oracle.ManagedDataAccess.Client;
 using SampleProject.Models;
 using System;
 using System.Collections.Generic;
@@ -17,29 +18,29 @@ namespace SampleProject.DAL
         public List<CustomerModel> getAllTableDetails(int a_id,int permission_id)
         {
             List<CustomerModel> regdetails = new List<CustomerModel>();
-            SqlCommand cmd;
-            SqlConnection con = GlobalConnection.getConnection();
+            MySqlCommand cmd;
+            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
-            cmd = new SqlCommand("[CustomerRecordsDesc]", con);
+            cmd = new MySqlCommand("CustomerRecordsDesc", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@p_id", 0);
-            cmd.Parameters.AddWithValue("@first_name", "");
-            cmd.Parameters.AddWithValue("@last_name", "");
-            cmd.Parameters.AddWithValue("@city", "");
-            cmd.Parameters.AddWithValue("@country", "");
-            cmd.Parameters.AddWithValue("@phone", "");
-            cmd.Parameters.AddWithValue("@H_id", 0);
-            cmd.Parameters.AddWithValue("@middle_name", "");
-            cmd.Parameters.AddWithValue("@mobileno", "");
-            cmd.Parameters.AddWithValue("@address", "");
-            cmd.Parameters.AddWithValue("@username", "");
-            cmd.Parameters.AddWithValue("@password", "");
-            cmd.Parameters.AddWithValue("@lastlogindate", "");
-            cmd.Parameters.AddWithValue("@state", "");
-            cmd.Parameters.AddWithValue("@action", "");
-            cmd.Parameters.AddWithValue("@a_id",a_id);
-            cmd.Parameters.AddWithValue("@Permission_id", permission_id);
-            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            cmd.Parameters.AddWithValue("?p_p_id", 0);
+            cmd.Parameters.AddWithValue("?p_first_name", "");
+            cmd.Parameters.AddWithValue("?p_last_name", "");
+            cmd.Parameters.AddWithValue("?p_city", "");
+            cmd.Parameters.AddWithValue("?p_country", "");
+            cmd.Parameters.AddWithValue("?p_phone", "");
+            cmd.Parameters.AddWithValue("?p_H_id", 0);
+            cmd.Parameters.AddWithValue("?p_middle_name", "");
+            cmd.Parameters.AddWithValue("?p_mobileno", "");
+            cmd.Parameters.AddWithValue("?p_address", "");
+            cmd.Parameters.AddWithValue("?p_username", "");
+            cmd.Parameters.AddWithValue("?p_password", "");
+            //cmd.Parameters.AddWithValue("?p_lastlogindate","");
+            cmd.Parameters.AddWithValue("?p_state", "");
+            cmd.Parameters.AddWithValue("?p_action", "");
+            cmd.Parameters.AddWithValue("?p_a_id", a_id);
+            cmd.Parameters.AddWithValue("?p_Permission_id", permission_id);
+            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
             sd.Fill(Dt);
             foreach (DataRow dR in Dt.Rows)
             {
@@ -56,7 +57,7 @@ namespace SampleProject.DAL
                     address = Convert.ToString(dR["country"]),
                     userName = Convert.ToString(dR["USERNAME"]),
                     password = Convert.ToString(dR["country"]),
-                    lastLoginDate = Convert.ToString(dR["LASTLOGGEDDATE"]),
+                   // lastLoginDate = Convert.ToString(dR["LASTLOGGEDDATE"]),
                     state = Convert.ToString(dR["STATE"]),
                     city = Convert.ToString(dR["CITY"]),
                     houseNo = Convert.ToString(dR["H_NUMBER"]),
@@ -72,13 +73,13 @@ namespace SampleProject.DAL
         internal DataSet getLocation()
         {
             List<SelectListItem> listLocations = new List<SelectListItem>();
-            SqlCommand cmd;
-            SqlConnection con = GlobalConnection.getConnection();
+            MySqlCommand cmd;
+            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
             DataSet dset = new DataSet();
-            cmd = new SqlCommand("[getLocation]", con);
+            cmd = new MySqlCommand("[getLocation]", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
             sd.Fill(dset);
             return dset;
         }
@@ -86,14 +87,14 @@ namespace SampleProject.DAL
         internal DataTable FetchRecord(int id)
         {
             DataTable Dt = new DataTable();
-            //SqlConnection objcon = new SqlConnection();
+            //MySqlConnection objcon = new MySqlConnection();
             //objcon.ConnectionString = ConfigurationManager.ConnectionStrings["ConnString"].ToString();
-            //SqlCommand cmd;
+            //MySqlCommand cmd;
             //objcon.Open();
-            //cmd = new SqlCommand("FetchStudentRecordsDesc", objcon);
+            //cmd = new MySqlCommand("FetchStudentRecordsDesc", objcon);
             //cmd.CommandType = CommandType.StoredProcedure;
             //cmd.Parameters.AddWithValue("p_id", id);
-            //SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            //MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
             //DataTable Dt = new DataTable();
 
             //GlobalConnection conn = new GlobalConnection();
@@ -102,8 +103,8 @@ namespace SampleProject.DAL
             //cmd.CommandText = "FetchCustomerRecords";
             //cmd.CommandType = CommandType.StoredProcedure;
             //cmd.Transaction = null;
-            //cmd.Parameters.Add("p_id", OracleDbType.Int64).Value = id;
-            //cmd.Parameters.Add("p_resultset", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+            //cmd.Parameters.AddWithValue("p_id", OracleDbType.Int64).Value = id;
+            //cmd.Parameters.AddWithValue("p_resultset", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
             //OracleDataAdapter da = new OracleDataAdapter(cmd);
             //da.Fill(Dt);
             return Dt;
@@ -112,11 +113,11 @@ namespace SampleProject.DAL
         internal string[] deleteRecord(string id)
         {
             string[] res = new string[3];
-            //SqlConnection objcon = new SqlConnection();
+            //MySqlConnection objcon = new MySqlConnection();
             //objcon.ConnectionString = ConfigurationManager.ConnectionStrings["ConnString"].ToString();
-            //SqlCommand cmd;
+            //MySqlCommand cmd;
             //objcon.Open();
-            //cmd = new SqlCommand("DeleteCustomer", objcon);
+            //cmd = new MySqlCommand("DeleteCustomer", objcon);
             //cmd.CommandType = CommandType.StoredProcedure;
             //cmd.Parameters.AddWithValue("@p_id", id);
             //cmd.Parameters.AddWithValue("@p_Action", "D");
@@ -128,8 +129,8 @@ namespace SampleProject.DAL
             //cmd.Connection = conn.getConnection();
             //cmd.CommandText = "DeleteCustomer";
             //cmd.CommandType = CommandType.StoredProcedure;
-            //cmd.Parameters.Add("p_id", OracleDbType.Long).Value = id;
-            //cmd.Parameters.Add("p_Action", OracleDbType.Varchar2).Value = "D";
+            //cmd.Parameters.AddWithValue("p_id", OracleDbType.Long).Value = id;
+            //cmd.Parameters.AddWithValue("p_Action", OracleDbType.Varchar2).Value = "D";
             //cmd.ExecuteNonQuery();
             res[0] = "Deleted";
             return res;
@@ -141,7 +142,7 @@ namespace SampleProject.DAL
 
             string[] res = new string[3];
 
-            SqlCommand cmd = null;
+            MySqlCommand cmd = null;
             GlobalConnection conn = new GlobalConnection();
             cmd.Connection = GlobalConnection.getConnection();
             //conn.Open();
@@ -149,7 +150,7 @@ namespace SampleProject.DAL
             if (id == 0)
             {
 
-                //cmd = new SqlCommand("AddNewCustomer", objcon);
+                //cmd = new MySqlCommand("AddNewCustomer", objcon);
                 //cmd.CommandType = CommandType.StoredProcedure;
                 //cmd.Parameters.AddWithValue("@p_id", id);
                 //cmd.Parameters.AddWithValue("@p_FirstName", FirstName);
@@ -163,19 +164,19 @@ namespace SampleProject.DAL
 
                 //cmd.CommandText = "AddNewCustomer";
                 //cmd.CommandType = CommandType.StoredProcedure;
-                //cmd.Parameters.Add("p_id", OracleDbType.Long).Value = id;
-                //cmd.Parameters.Add("p_FirstName", OracleDbType.Varchar2).Value = FirstName;
-                //cmd.Parameters.Add("p_LastName", OracleDbType.Varchar2).Value = LastName;
-                //cmd.Parameters.Add("p_contact_Number", OracleDbType.Varchar2).Value = Contact;
-                //cmd.Parameters.Add("p_City", OracleDbType.Varchar2).Value =City;
-                //cmd.Parameters.Add("p_Country", OracleDbType.Varchar2).Value = Country;
-                //cmd.Parameters.Add("p_Action", OracleDbType.Varchar2).Value = "I";
+                //cmd.Parameters.AddWithValue("p_id", OracleDbType.Long).Value = id;
+                //cmd.Parameters.AddWithValue("p_FirstName", OracleDbType.Varchar2).Value = FirstName;
+                //cmd.Parameters.AddWithValue("p_LastName", OracleDbType.Varchar2).Value = LastName;
+                //cmd.Parameters.AddWithValue("p_contact_Number", OracleDbType.Varchar2).Value = Contact;
+                //cmd.Parameters.AddWithValue("p_City", OracleDbType.Varchar2).Value =City;
+                //cmd.Parameters.AddWithValue("p_Country", OracleDbType.Varchar2).Value = Country;
+                //cmd.Parameters.AddWithValue("p_Action", OracleDbType.Varchar2).Value = "I";
                 //cmd.ExecuteNonQuery();
                 res[0] = "Saved";
             }
             else if (id != 0)
             {
-                //cmd = new SqlCommand("AddNewCustomer", objcon);
+                //cmd = new MySqlCommand("AddNewCustomer", objcon);
                 //cmd.CommandType = CommandType.StoredProcedure;
                 //cmd.Parameters.AddWithValue("@p_id", id);
                 //cmd.Parameters.AddWithValue("@p_FirstName", FirstName);
@@ -188,13 +189,13 @@ namespace SampleProject.DAL
                 //res[0] = "Updated";
                 cmd.CommandText = "AddNewCustomer";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("p_id", OracleDbType.Long).Value = id;
-                cmd.Parameters.Add("p_FirstName", OracleDbType.Varchar2).Value = FirstName;
-                cmd.Parameters.Add("p_LastName", OracleDbType.Varchar2).Value = LastName;
-                cmd.Parameters.Add("p_contact_Number", OracleDbType.Varchar2).Value = Contact;
-                cmd.Parameters.Add("p_City", OracleDbType.Varchar2).Value = City;
-                cmd.Parameters.Add("p_Country", OracleDbType.Varchar2).Value = Country;
-                cmd.Parameters.Add("p_Action", OracleDbType.Varchar2).Value = "U";
+                cmd.Parameters.AddWithValue("?p_p_id", OracleDbType.Long).Value = id;
+                cmd.Parameters.AddWithValue("?p_p_FirstName", OracleDbType.Varchar2).Value = FirstName;
+                cmd.Parameters.AddWithValue("?p_p_LastName", OracleDbType.Varchar2).Value = LastName;
+                cmd.Parameters.AddWithValue("?p_p_contact_Number", OracleDbType.Varchar2).Value = Contact;
+                cmd.Parameters.AddWithValue("?p_p_City", OracleDbType.Varchar2).Value = City;
+                cmd.Parameters.AddWithValue("?p_p_Country", OracleDbType.Varchar2).Value = Country;
+                cmd.Parameters.AddWithValue("?p_p_Action", OracleDbType.Varchar2).Value = "U";
                 cmd.ExecuteNonQuery();
                 res[0] = "Updated";
             }

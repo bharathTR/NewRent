@@ -1,4 +1,5 @@
-﻿using Oracle.ManagedDataAccess.Client;
+﻿using MySql.Data.MySqlClient;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -8,17 +9,18 @@ using System.Web;
 
 namespace SampleProject
 {
-    
+
     public class GlobalConnection
     {
         //public static OracleConnection conn = null;
-        public static SqlConnection conn;
+        //public static SqlConnection conn;
+        public static MySqlConnection conn;
 
-        public static SqlConnection getConnection()
+        public static MySqlConnection getConnection()
         {
             //OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["ConnString"].ConnectionString);
 
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnString"].ConnectionString);
+            MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["ConnString"].ConnectionString);
             conn.Open();
 
             return conn;
