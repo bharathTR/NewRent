@@ -30,6 +30,13 @@ namespace SampleProject.Models
         public int total { get; set; }
         public int pending { get; set; }
 
+        public string To { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
+        public HttpPostedFileBase Attachment { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+
 
 
 

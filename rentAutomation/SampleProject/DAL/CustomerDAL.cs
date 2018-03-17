@@ -15,73 +15,93 @@ namespace SampleProject.DAL
     public class CustomerDAL
     {
         LoginModel Loginobj = new LoginModel();
+        public static readonly log4net.ILog log =
+      log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public List<CustomerModel> getAllTableDetails(int a_id,int permission_id)
         {
             List<CustomerModel> regdetails = new List<CustomerModel>();
             MySqlCommand cmd;
-            MySqlConnection con = GlobalConnection.getConnection();
-            DataTable Dt = new DataTable();
-            cmd = new MySqlCommand("CustomerRecordsDesc", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("?p_p_id", 0);
-            cmd.Parameters.AddWithValue("?p_first_name", "");
-            cmd.Parameters.AddWithValue("?p_last_name", "");
-            cmd.Parameters.AddWithValue("?p_city", "");
-            cmd.Parameters.AddWithValue("?p_country", "");
-            cmd.Parameters.AddWithValue("?p_phone", "");
-            cmd.Parameters.AddWithValue("?p_H_id", 0);
-            cmd.Parameters.AddWithValue("?p_middle_name", "");
-            cmd.Parameters.AddWithValue("?p_mobileno", "");
-            cmd.Parameters.AddWithValue("?p_address", "");
-            cmd.Parameters.AddWithValue("?p_username", "");
-            cmd.Parameters.AddWithValue("?p_password", "");
-            //cmd.Parameters.AddWithValue("?p_lastlogindate","");
-            cmd.Parameters.AddWithValue("?p_state", "");
-            cmd.Parameters.AddWithValue("?p_action", "");
-            cmd.Parameters.AddWithValue("?p_a_id", a_id);
-            cmd.Parameters.AddWithValue("?p_Permission_id", permission_id);
-            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
-            sd.Fill(Dt);
-            foreach (DataRow dR in Dt.Rows)
+            try
             {
-                regdetails.Add(new CustomerModel
+                MySqlConnection con = GlobalConnection.getConnection();
+                DataTable Dt = new DataTable();
+                cmd = new MySqlCommand("CustomerRecordsDesc", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("?p_p_id", 0);
+                cmd.Parameters.AddWithValue("?p_first_name", "");
+                cmd.Parameters.AddWithValue("?p_last_name", "");
+                cmd.Parameters.AddWithValue("?p_city", "");
+                cmd.Parameters.AddWithValue("?p_country", "");
+                cmd.Parameters.AddWithValue("?p_phone", "");
+                cmd.Parameters.AddWithValue("?p_H_id", 0);
+                cmd.Parameters.AddWithValue("?p_middle_name", "");
+                cmd.Parameters.AddWithValue("?p_mobileno", "");
+                cmd.Parameters.AddWithValue("?p_address", "");
+                cmd.Parameters.AddWithValue("?p_username", "");
+                cmd.Parameters.AddWithValue("?p_password", "");
+                //cmd.Parameters.AddWithValue("?p_lastlogindate","");
+                cmd.Parameters.AddWithValue("?p_state", "");
+                cmd.Parameters.AddWithValue("?p_action", "");
+                cmd.Parameters.AddWithValue("?p_a_id", a_id);
+                cmd.Parameters.AddWithValue("?p_Permission_id", permission_id);
+                MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
+                sd.Fill(Dt);
+                foreach (DataRow dR in Dt.Rows)
                 {
-                    id = Convert.ToInt32(dR["LOGINID"]),
-                    firstName = Convert.ToString(dR["FIRSTNAME"]),
-                    lastName = Convert.ToString(dR["LASTNAME"]),
-                    phoneNO = Convert.ToString(dR["phone"]),
-                    country = Convert.ToString(dR["COUNTRY"]),
-                    h_id = Convert.ToInt32(dR["h_id"]),
-                    middleName = Convert.ToString(dR["MIDDLENAME"]),
-                    mobileNo = Convert.ToString(dR["MOBILENO"]),
-                    address = Convert.ToString(dR["country"]),
-                    userName = Convert.ToString(dR["USERNAME"]),
-                    password = Convert.ToString(dR["country"]),
-                   // lastLoginDate = Convert.ToString(dR["LASTLOGGEDDATE"]),
-                    state = Convert.ToString(dR["STATE"]),
-                    city = Convert.ToString(dR["CITY"]),
-                    houseNo = Convert.ToString(dR["H_NUMBER"]),
-                    blockNo = Convert.ToString(dR["H_BLOCK"]),
-                    floorNo = Convert.ToString(dR["H_FLOOR_NO"]),
-                });
+                    regdetails.Add(new CustomerModel
+                    {
+                        id = Convert.ToInt32(dR["LOGINID"]),
+                        firstName = Convert.ToString(dR["FIRSTNAME"]),
+                        lastName = Convert.ToString(dR["LASTNAME"]),
+                        phoneNO = Convert.ToString(dR["phone"]),
+                        country = Convert.ToString(dR["COUNTRY"]),
+                        h_id = Convert.ToInt32(dR["h_id"]),
+                        middleName = Convert.ToString(dR["MIDDLENAME"]),
+                        mobileNo = Convert.ToString(dR["MOBILENO"]),
+                        address = Convert.ToString(dR["country"]),
+                        userName = Convert.ToString(dR["USERNAME"]),
+                        password = Convert.ToString(dR["country"]),
+                        // lastLoginDate = Convert.ToString(dR["LASTLOGGEDDATE"]),
+                        state = Convert.ToString(dR["STATE"]),
+                        city = Convert.ToString(dR["CITY"]),
+                        houseNo = Convert.ToString(dR["H_NUMBER"]),
+                        blockNo = Convert.ToString(dR["H_BLOCK"]),
+                        floorNo = Convert.ToString(dR["H_FLOOR_NO"]),
+                    });
 
+                }
+
+                return regdetails;
             }
-
-            return regdetails;
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return regdetails;
+            }
         }
 
         internal DataSet getLocation()
         {
             List<SelectListItem> listLocations = new List<SelectListItem>();
             MySqlCommand cmd;
-            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
             DataSet dset = new DataSet();
-            cmd = new MySqlCommand("[getLocation]", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
-            sd.Fill(dset);
-            return dset;
+            try
+            {
+                MySqlConnection con = GlobalConnection.getConnection();
+
+                cmd = new MySqlCommand("[getLocation]", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
+                sd.Fill(dset);
+                return dset;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return dset;
+            }
+
         }
 
         internal DataTable FetchRecord(int id)
@@ -119,7 +139,7 @@ namespace SampleProject.DAL
             //objcon.Open();
             //cmd = new MySqlCommand("DeleteCustomer", objcon);
             //cmd.CommandType = CommandType.StoredProcedure;
-            //cmd.Parameters.AddWithValue("@p_id", id);
+            //cmd.Parameters.AddWithVadsetlue("@p_id", id);
             //cmd.Parameters.AddWithValue("@p_Action", "D");
             //res[0] = cmd.ExecuteNonQuery().ToString();
             //res[0] = "Deleted";

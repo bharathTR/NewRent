@@ -50,12 +50,6 @@ namespace SampleProject.Controllers
                         LoginID = Convert.ToString(dR["LOGINID"]);
                         permission = Convert.ToString(dR["Permissionid"]);
                         ApartmentID = Convert.ToString(dR["H_Apartment_ID"]);
-
-
-
-
-
-
                         if (userName != user && pass != password)
                         {
 
@@ -63,11 +57,7 @@ namespace SampleProject.Controllers
                             Session["LOGINID"] = null;
                             Session["userType"] = null;
                             Session["ApartmentID"] = null;
-
-
                             ModelState.AddModelError("ErrorMessage", "The user name or password provided is incorrect.");
-
-
                         }
                         else
                         {

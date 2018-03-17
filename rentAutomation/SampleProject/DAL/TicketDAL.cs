@@ -22,31 +22,41 @@ namespace SampleProject.DAL
         {
             List<TicketModel> objTicketModel = new List<TicketModel>();
             MySqlCommand cmd;
-            MySqlConnection con = GlobalConnection.getConnection();
-            DataTable Dt = new DataTable();
-            cmd = new MySqlCommand("getTicketList", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("?p_p_LoginId", id);
-            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
-            sd.Fill(Dt);
-
-            
-            foreach (DataRow dR in Dt.Rows)
+            try
             {
-                objTicketModel.Add(new TicketModel
+
+
+                MySqlConnection con = GlobalConnection.getConnection();
+                DataTable Dt = new DataTable();
+                cmd = new MySqlCommand("getTicketList", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("?p_p_LoginId", id);
+                MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
+                sd.Fill(Dt);
+
+
+                foreach (DataRow dR in Dt.Rows)
                 {
-                    TicketID = Convert.ToString(dR["TICKET_ID"]),
-                    Type = Convert.ToString(dR["TICKET_TYPE"]),
-                    Description = Convert.ToString(dR["TICKET_DESC"]),
-                    Raised_Date = Convert.ToString(dR["TICKET_RAISED_DATE"]),
-                    Status = Convert.ToString(dR["TICKET_STATUS"]),
-                    TicketNo = Convert.ToString(dR["TICKET_NUMBER"]),
+                    objTicketModel.Add(new TicketModel
+                    {
+                        TicketID = Convert.ToString(dR["TICKET_ID"]),
+                        Type = Convert.ToString(dR["TICKET_TYPE"]),
+                        Description = Convert.ToString(dR["TICKET_DESC"]),
+                        Raised_Date = Convert.ToString(dR["TICKET_RAISED_DATE"]),
+                        Status = Convert.ToString(dR["TICKET_STATUS"]),
+                        TicketNo = Convert.ToString(dR["TICKET_NUMBER"]),
 
-                });
+                    });
 
+                }
+
+                return objTicketModel;
             }
-
-            return objTicketModel;
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return objTicketModel;
+            }
         }
         
         public DataTable FetchTicketDetail(int id,int a_id)
@@ -77,9 +87,12 @@ namespace SampleProject.DAL
 
             MySqlCommand cmd;
             string MobileNumber = string.Empty;
-            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
             DataSet dset = new DataSet();
+            try
+            {
+            
+            MySqlConnection con = GlobalConnection.getConnection();
             cmd = new MySqlCommand("GetPhoneNumber", con);
             cmd.Parameters.AddWithValue("?p_loginId", loginID);
             cmd.Parameters.AddWithValue("?p_Phone", SqlDbType.Int).Direction = ParameterDirection.Output;
@@ -96,29 +109,45 @@ namespace SampleProject.DAL
 
             }
             return Dt;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return Dt;
+            }
+
         }
         internal DataTable GetTicketNumber(int loginID)
         {
 
             MySqlCommand cmd;
             string MobileNumber = string.Empty;
-            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
             DataSet dset = new DataSet();
-            cmd = new MySqlCommand("GetTicketNumber", con);
-            cmd.Parameters.AddWithValue("?p_loginId", loginID);
-
-            cmd.CommandType = CommandType.StoredProcedure;
-            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
-            sd.Fill(dset);
-            if (dset != null)
+            try
             {
 
 
-                Dt = dset.Tables[0];
+                MySqlConnection con = GlobalConnection.getConnection();
+                cmd = new MySqlCommand("GetTicketNumber", con);
+                cmd.Parameters.AddWithValue("?p_loginId", loginID);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
+                sd.Fill(dset);
+                if (dset != null)
+                {
 
+
+                    Dt = dset.Tables[0];
+
+                }
+                return Dt;
             }
-            return Dt;
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return Dt;
+            }
         }
 
 
@@ -128,148 +157,202 @@ namespace SampleProject.DAL
         {
             List<TicketModel> objTicketModel = new List<TicketModel>();
             MySqlCommand cmd;
-            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
-            cmd = new MySqlCommand("getTicketListOwner", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("?p_p_ApartmentID", id);
-            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
-            sd.Fill(Dt);
 
-
-            foreach (DataRow dR in Dt.Rows)
+            try
             {
-                objTicketModel.Add(new TicketModel
+                MySqlConnection con = GlobalConnection.getConnection();
+                cmd = new MySqlCommand("getTicketListOwner", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("?p_p_ApartmentID", id);
+                MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
+                sd.Fill(Dt);
+                foreach (DataRow dR in Dt.Rows)
                 {
-         
-                    TicketID = Convert.ToString(dR["TICKET_ID"]),
-                    Type = Convert.ToString(dR["TICKET_TYPE"]),
-                    Description = Convert.ToString(dR["TICKET_DESC"]),
-                    Raised_Date = Convert.ToString(dR["TICKET_RAISED_DATE"]),
-                    Status = Convert.ToString(dR["TICKET_STATUS"]),
-                    FIRSTNAME = Convert.ToString(dR["FIRSTNAME"]),
-                    LASTNAME = Convert.ToString(dR["LASTNAME"]),
-                    MOBILENO = Convert.ToString(dR["MOBILENO"]),
-                    H_FLOOR_NO = Convert.ToString(dR["H_FLOOR_NO"]),
-                    H_Number = Convert.ToString(dR["H_Number"]),
-                    H_BLOCK = Convert.ToString(dR["H_BLOCK"]),
-                    TicketNo = Convert.ToString(dR["TICKET_NUMBER"]),
+                    objTicketModel.Add(new TicketModel
+                    {
 
-                });
+                        TicketID = Convert.ToString(dR["TICKET_ID"]),
+                        Type = Convert.ToString(dR["TICKET_TYPE"]),
+                        Description = Convert.ToString(dR["TICKET_DESC"]),
+                        Raised_Date = Convert.ToString(dR["TICKET_RAISED_DATE"]),
+                        Status = Convert.ToString(dR["TICKET_STATUS"]),
+                        FIRSTNAME = Convert.ToString(dR["FIRSTNAME"]),
+                        LASTNAME = Convert.ToString(dR["LASTNAME"]),
+                        MOBILENO = Convert.ToString(dR["MOBILENO"]),
+                        H_FLOOR_NO = Convert.ToString(dR["H_FLOOR_NO"]),
+                        H_Number = Convert.ToString(dR["H_Number"]),
+                        H_BLOCK = Convert.ToString(dR["H_BLOCK"]),
+                        TicketNo = Convert.ToString(dR["TICKET_NUMBER"]),
 
+                    });
+
+                }
+
+                return objTicketModel;
             }
-
-            return objTicketModel;
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return objTicketModel;
+            }
         }
 
-        internal int SaveNewTicket(string Type,string Desc,int id)
+        internal int SaveNewTicket(string Type, string Desc, int id)
         {
-            
-            MySqlCommand cmd;
-            MySqlConnection con = GlobalConnection.getConnection();
-            DataTable Dt = new DataTable();
-            cmd = new MySqlCommand("createNewTicket", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("?p_p_TICKET_TYPE", Type);
-            cmd.Parameters.AddWithValue("?p_p_TICKET_DESC", Desc);
-            cmd.Parameters.AddWithValue("?p_p_TICKET_STATUS", "Pending");
-            cmd.Parameters.AddWithValue("?p_p_RAISED_BY_LOGIN_ID", id);
-            cmd.Parameters.AddWithValue("?p_p_TICKET_FLAG", "0");
 
-            int res=cmd.ExecuteNonQuery();
-            return res;
+            MySqlCommand cmd;
+            DataTable Dt = new DataTable();
+            int res=0;
+            try
+            {
+
+
+                MySqlConnection con = GlobalConnection.getConnection();
+                cmd = new MySqlCommand("createNewTicket", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("?p_p_TICKET_TYPE", Type);
+                cmd.Parameters.AddWithValue("?p_p_TICKET_DESC", Desc);
+                cmd.Parameters.AddWithValue("?p_p_TICKET_STATUS", "Pending");
+                cmd.Parameters.AddWithValue("?p_p_RAISED_BY_LOGIN_ID", id);
+                cmd.Parameters.AddWithValue("?p_p_TICKET_FLAG", "0");
+
+                res = cmd.ExecuteNonQuery();
+                return res;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return res;
+            }
+
+
         }
 
         internal TicketModel getTicketCout( int id)
         {
 
             MySqlCommand cmd;
-            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
             TicketModel lstTicketCount = new TicketModel();
-            cmd = new MySqlCommand("sp_TicketCount", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("?p_Apartment_ID", id);
-            cmd.Parameters.AddWithValue("?p_Processing", SqlDbType.Int).Direction = ParameterDirection.Output;
-            cmd.Parameters.AddWithValue("?p_Pending", SqlDbType.Int).Direction = ParameterDirection.Output;
-            cmd.Parameters.AddWithValue("?p_Completed", SqlDbType.Int).Direction = ParameterDirection.Output;
-            cmd.Parameters.AddWithValue("?p_Total", SqlDbType.Int).Direction = ParameterDirection.Output;
-            cmd.ExecuteNonQuery();
+            MySqlConnection con = GlobalConnection.getConnection();
+            try
+            {
+                cmd = new MySqlCommand("sp_TicketCount", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("?p_Apartment_ID", id);
+                cmd.Parameters.AddWithValue("?p_Processing", SqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd.Parameters.AddWithValue("?p_Pending", SqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd.Parameters.AddWithValue("?p_Completed", SqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd.Parameters.AddWithValue("?p_Total", SqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
 
-            int p_processing = (int)cmd.Parameters["?p_Processing"].Value;
-            int p_completed = (int)cmd.Parameters["?p_Completed"].Value;
-            int p_pending = (int)cmd.Parameters["?p_Pending"].Value;
-            int p_total = (int)cmd.Parameters["?p_Total"].Value;
+                int p_processing = (int)cmd.Parameters["?p_Processing"].Value;
+                int p_completed = (int)cmd.Parameters["?p_Completed"].Value;
+                int p_pending = (int)cmd.Parameters["?p_Pending"].Value;
+                int p_total = (int)cmd.Parameters["?p_Total"].Value;
 
 
-            lstTicketCount.completed = p_completed;
-            lstTicketCount.pending = p_pending;
-            lstTicketCount.processing = p_processing;
-            lstTicketCount.total = p_total;
+                lstTicketCount.completed = p_completed;
+                lstTicketCount.pending = p_pending;
+                lstTicketCount.processing = p_processing;
+                lstTicketCount.total = p_total;
+                return lstTicketCount;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return lstTicketCount;
+            }
 
-             
-        
-            
-            return lstTicketCount;
         }
 
         internal int TicketStatusUpdate(int Ticketid, int a_id, string time, string response, string ExpectedClosedate, string progress)
         {
            
             MySqlCommand cmd;
-            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
-            cmd = new MySqlCommand("sp_TicketStatusupdate", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("?p_p_Ticketid", Ticketid);
-            cmd.Parameters.AddWithValue("?p_p_ApartmentID", a_id);
-            cmd.Parameters.AddWithValue("?p_p_TICKET_FLAG", 1);
-            cmd.Parameters.AddWithValue("?p_p_TICKET_SLOT", time);
-            cmd.Parameters.AddWithValue("?p_p_TICKET_EXP_CLOSURE_DATE", ExpectedClosedate);
-            cmd.Parameters.AddWithValue("?p_p_TICKET_RESPONSE", response);
-            cmd.Parameters.AddWithValue("?p_p_TICKET_STATUS", progress);
-            int res = cmd.ExecuteNonQuery();
-            return res;
+            int res = 0;
+            try
+            {
+                MySqlConnection con = GlobalConnection.getConnection();
+
+                cmd = new MySqlCommand("sp_TicketStatusupdate", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("?p_p_Ticketid", Ticketid);
+                cmd.Parameters.AddWithValue("?p_p_ApartmentID", a_id);
+                cmd.Parameters.AddWithValue("?p_p_TICKET_FLAG", 1);
+                cmd.Parameters.AddWithValue("?p_p_TICKET_SLOT", time);
+                cmd.Parameters.AddWithValue("?p_p_TICKET_EXP_CLOSURE_DATE", ExpectedClosedate);
+                cmd.Parameters.AddWithValue("?p_p_TICKET_RESPONSE", response);
+                cmd.Parameters.AddWithValue("?p_p_TICKET_STATUS", progress);
+                 res = cmd.ExecuteNonQuery();
+                return res;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return res;
+            }
         }
 
         internal DataSet getServiceTypes()
         {
             List<SelectListItem> listLocations = new List<SelectListItem>();
             MySqlCommand cmd;
-            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
             DataSet dset = new DataSet();
-            cmd = new MySqlCommand("sp_getServiceTypes", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
-            sd.Fill(dset);
-            return dset;
+            try
+            {
+                MySqlConnection con = GlobalConnection.getConnection();
+
+                cmd = new MySqlCommand("sp_getServiceTypes", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
+                sd.Fill(dset);
+                return dset;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return dset;
+            }
         }
 
         internal List<SelectListItem> getSlots()
         {
             List<SelectListItem> listTimeSlots = new List<SelectListItem>();
             MySqlCommand cmd;
-            MySqlConnection con = GlobalConnection.getConnection();
             DataTable Dt = new DataTable();
             DataSet dset = new DataSet();
-            cmd = new MySqlCommand("sp_Timeslots", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
-            sd.Fill(Dt);
-            foreach (DataRow dR in Dt.Rows)
+            try
             {
-                listTimeSlots.Add(new SelectListItem
+                MySqlConnection con = GlobalConnection.getConnection();
+
+                cmd = new MySqlCommand("sp_Timeslots", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
+                sd.Fill(Dt);
+                foreach (DataRow dR in Dt.Rows)
                 {
+                    listTimeSlots.Add(new SelectListItem
+                    {
 
-                    Value = Convert.ToString(dR["SERVICE_ID"]),
-                    Text = Convert.ToString(dR["SERVICETYPE"]),
-                    
+                        Value = Convert.ToString(dR["SERVICE_ID"]),
+                        Text = Convert.ToString(dR["SERVICETYPE"]),
 
-                });
 
+                    });
+
+                }
+                return listTimeSlots;
             }
-            return listTimeSlots;
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return listTimeSlots;
+            }
+
         }
     }
 }
